@@ -3,7 +3,9 @@ import axios from "axios";
 import { Worker } from 'worker_threads';
 import path from 'path';
 
-const worker = new Worker(path.resolve(__dirname, './worker.ts'));
+const worker = new Worker(path.resolve(__dirname, './worker.ts'), {
+    execArgv: ['-r', 'ts-node/register']
+});
 
 worker.on('error', (error) => {
     console.error(`Worker error: ${error}`);
