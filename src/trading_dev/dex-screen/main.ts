@@ -1,5 +1,5 @@
 import { logger } from "../../helpers/logger";
-import axios from "axios/index";
+import axios from "axios";
 import { Worker } from 'worker_threads';
 
 const worker = new Worker('./worker.js');
