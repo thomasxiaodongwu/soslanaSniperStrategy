@@ -7,5 +7,5 @@ if (parentPort === null) {
 
 parentPort.on('message', (msg) => {
     const coin = msg.computePrimesUpTo;
-    logger.info(` Accept bew coint ${coin}`);
+    logger.info(` Accept bew coin: ${coin}`);
 });

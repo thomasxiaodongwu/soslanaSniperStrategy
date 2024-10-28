@@ -19,16 +19,19 @@ worker.on('exit', (code) => {
 
 const PING_INTERVAL_MS = 1_001;
 
+interface ApiResponse {
+    tokenAddress: string;
+    chainId: string;
+}
 
 setInterval(async () => {
     axios.get("https://api.dexscreener.com/token-profiles/latest/v1", {})
         .then(response => {
-            const data = response.data;
-            data.forEach((item) => {
+            const data : ApiResponse[] = response.data;
+            data.forEach((item: ApiResponse) => {
                 if(item.chainId === "solana"){
                     worker.postMessage({ computePrimesUpTo: item.tokenAddress });
                 }
-                console.log(`URL: ${item.url}, ChainId: ${item.chainId}`);
             });
         })
         .catch(error => {
