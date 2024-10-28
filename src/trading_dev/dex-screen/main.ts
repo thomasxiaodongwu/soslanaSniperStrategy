@@ -23,11 +23,13 @@ const PING_INTERVAL_MS = 1_001;
 setInterval(async () => {
     axios.get("https://api.dexscreener.com/token-profiles/latest/v1", {})
         .then(response => {
-            console.log(response.data);
-            const resJson = JSON.parse(response.data);
-            if(resJson.chainId === "solana"){
-                worker.postMessage({ computePrimesUpTo: resJson.tokenAddress });
-            }
+            const data = response.data;
+            data.forEach((item) => {
+                if(item.chainId === "solana"){
+                    worker.postMessage({ computePrimesUpTo: item.tokenAddress });
+                }
+                console.log(`URL: ${item.url}, ChainId: ${item.chainId}`);
+            });
         })
         .catch(error => {
             logger.info(error);
