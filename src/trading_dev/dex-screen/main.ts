@@ -2,7 +2,7 @@ import { logger } from "../../helpers/logger";
 import axios from "axios";
 import { Worker } from 'worker_threads';
 
-const worker = new Worker('./worker.js');
+const worker = new Worker('./worker.ts');
 worker.on('message', (msg) => {
     console.log('来自工作线程的消息:', msg);
 });
@@ -22,8 +22,6 @@ async function snipe() {
                 logger.info(error);
             });
     }, PING_INTERVAL_MS);
-
-
 }
 
-await snipe();
+snipe();
