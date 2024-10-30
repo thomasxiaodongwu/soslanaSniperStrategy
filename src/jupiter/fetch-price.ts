@@ -4,8 +4,12 @@ export async function getCurrentPriceInSOL(tokenAddress:string){
     try{
         const response = await( await fetch(`https://price.jup.ag/v6/price?ids=${tokenAddress}&vsToken=${wsol}`)).json();
         //const response = await( await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=${wsol}&outputMint=${tokenAddress}&amount=1000000&slippageBps=50`) ).json()
-        console.log(response);
-        return response.data[tokenAddress].price;
+        //console.log(response);
+        if (response.data && response.data[tokenAddress].price>0){
+            return response.data[tokenAddress].price;
+        } else{
+            return 0;
+        }
     }catch(e){
         console.log(`Error when getting current price of ${tokenAddress} `, e)
     }
